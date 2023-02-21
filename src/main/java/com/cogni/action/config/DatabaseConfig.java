@@ -1,0 +1,25 @@
+package com.cogni.action.config;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.cogni.action.model.Employee;
+import com.cogni.action.repo.EmployeeRepository;
+
+@Configuration
+class DatabaseConfig {
+
+	private static final Logger log = LoggerFactory.getLogger(DatabaseConfig.class);
+
+	@Bean
+	CommandLineRunner initDatabase(EmployeeRepository repository) {
+
+		return args -> {
+			log.info("Preloading " + repository.save(new Employee("Bilbo Baggins", "burglar")));
+			log.info("Preloading " + repository.save(new Employee("Frodo Baggins", "thief")));
+		};
+	}
+}
